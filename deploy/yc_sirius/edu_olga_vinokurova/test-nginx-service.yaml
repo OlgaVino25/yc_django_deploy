@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-nginx-service
+  namespace: edu-olga-vinokurova
+spec:
+  selector:
+    app: test-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

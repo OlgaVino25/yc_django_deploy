@@ -1,0 +1,1 @@
+{"apiVersion":"v1","kind":"Pod","metadata":{"annotations":{},"name":"test-nginx","namespace":"edu-olga-vinokurova"},"spec":{"containers":[{"image":"nginx:1.14.2","name":"nginx","ports":[{"containerPort":80}]}]}}
