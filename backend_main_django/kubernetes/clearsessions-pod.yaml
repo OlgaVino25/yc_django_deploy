@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django-clearsessions
+spec:
+  restartPolicy: Never
+  containers:
+  - name: clearsessions
+    image: django_app:latest
+    imagePullPolicy: IfNotPresent
+    command: ["python", "manage.py", "clearsessions"]
+    envFrom:
+    - secretRef:
+        name: django-secrets

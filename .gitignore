@@ -1,0 +1,112 @@
+# Папки зависимостей и сборки (фронтенд)
+node_modules/
+bundles/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# Виртуальные окружения
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Редакторы и IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+*.sublime-workspace
+*.iml
+
+# Файлы ОС
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+*.lnk
+*.suo
+*.user
+*.userosscache
+
+# Django
+*.log
+local_settings.py
+*.local.py
+*.backup
+db.sqlite3
+*.sqlite3
+*.sqlite3-journal
+/staticfiles/
+/mediafiles/
+/static/
+/media/
+
+# Переменные окружения (локальные)
+.env
+.env.prod
+.env.local
+.env.*.local
+.env.production
+
+# Kubernetes secrets (в любой папке)
+**/secrets.yaml
+
+# Тесты и отчёты
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Прочие временные файлы
+pip-log.txt
+pip-delete-this-directory.txt
+*.mo
+*.pot
+*.pid
+*.sage.py
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+cython_debug/
+.parcel-cache/
+/site
