@@ -395,7 +395,7 @@ kubectl apply -f deploy/yc-sirius/<namespace>/test-nginx-service.yaml
 kubectl describe service test-nginx-service -n <namespace>
 ```
 
-*В выводе должна быть строка Endpoints: <IP*пода>:80 (фактический IP вашего пода).\_
+_В выводе должна быть строка Endpoints: <IP пода>:80 (фактический IP вашего пода)._
 
 3. Локальная проверка через port-forward
    Если нужно проверить работу пода локально, выполните:
@@ -449,3 +449,41 @@ kubectl rollout restart deployment main-nginx -n <namespace>
 - Указать переменные окружения, используя `valueFrom.secretKeyRef`.
 
 Пример пода с автоматическим монтированием сертификата см. в `deploy/yc-sirius/edu-olga-vinokurova/psql-client-automount.yaml`.
+
+## Сборка и публикация Docker-образа
+
+Для деплоя в кластер необходимо опубликовать образ приложения в Docker Hub.
+
+1. Сборка образа с тегом коммита
+
+```bash
+# Получить короткий хэш текущего коммита
+git rev-parse --short HEAD
+```
+
+_Пример вывода: a1b2c3d._
+
+```bash
+# Собрать образ
+docker build -t your-dockerhub-username/django-site:<GIT_COMMIT> ./backend_main_django
+```
+
+2. Загрузка в Docker Hub
+
+```bash
+docker push your-dockerhub-username/django-site:<GIT_COMMIT>
+```
+
+3. Использование в манифестах Kubernetes
+   В Deployment укажите полное имя образа:
+
+```bash
+image: your-dockerhub-username/django-site:<хэш-коммита>
+```
+
+При необходимости можно использовать тег `latest` для последней версии, но для воспроизводимости рекомендуется явно указывать хэш.
+
+4. Проверьте, что образы появились
+
+- На странице репозитория your-dockerhub-username/django-site перейдите на вкладку **Tags**.
+- Там должны отображаться загруженные теги (`a1b2c3d`, `latest`) с информацией о размере и дате пуша.
