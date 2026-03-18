@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql-client
+  namespace: edu-olga-vinokurova
+spec:
+  containers:
+  - name: psql
+    image: postgres:13-alpine
+    command: ["sleep", "3600"]
+    env:
+    - name: PGUSER
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: username
+    - name: PGPASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: password
+    - name: PGHOST
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: host
+    - name: PGPORT
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: port
+    - name: PGDATABASE
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: name
+    - name: PGSSLMODE
+      value: "require"
+    - name: PGSSLROOTCERT
+      value: "/root/.postgresql/root.crt"
+    volumeMounts:
+    - name: ssl-certs
+      mountPath: /root/.postgresql
+      readOnly: true
+  volumes:
+  - name: ssl-certs
+    secret:
+      secretName: postgres
+      items:
+      - key: root.crt
+        path: root.crt
+        mode: 0600

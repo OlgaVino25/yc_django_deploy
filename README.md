@@ -361,7 +361,7 @@ kubectl logs <pod-name>
 
 При желании можно изменить расписание, отредактировав поле `schedule` в `cronjob.yaml`.
 
-# Деплой тестового Nginx в dev-окружение (yc-sirius-dev)
+## Деплой тестового Nginx в dev-окружение (yc-sirius-dev)
 
 Этот раздел описывает развёртывание простого пода с Nginx в вашем облачном namespace и его подключение через уже существующий домен.
 
@@ -395,7 +395,7 @@ kubectl apply -f deploy/yc-sirius/<namespace>/test-nginx-service.yaml
 kubectl describe service test-nginx-service -n <namespace>
 ```
 
-_В выводе должна быть строка Endpoints: <IP_пода>:80 (фактический IP вашего пода)._
+*В выводе должна быть строка Endpoints: <IP*пода>:80 (фактический IP вашего пода).\_
 
 3. Локальная проверка через port-forward
    Если нужно проверить работу пода локально, выполните:
@@ -440,3 +440,12 @@ kubectl rollout restart deployment main-nginx -n <namespace>
 
 - Логи вашего пода: `kubectl logs -n <namespace> test-nginx`
 - Логи main-nginx (если что-то не работает): `kubectl logs -n <namespace> deployment/main-nginx`
+
+## Подготовка секрета для подключения к БД
+
+В кластере уже создан секрет `postgres`, содержащий все необходимые данные (хост, порт, имя БД, пользователя, пароль и корневой сертификат). Для использования в поде достаточно:
+
+- Смонтировать ключ `root.crt` в контейнер с правами 0600.
+- Указать переменные окружения, используя `valueFrom.secretKeyRef`.
+
+Пример пода с автоматическим монтированием сертификата см. в `deploy/yc-sirius/edu-olga-vinokurova/psql-client-automount.yaml`.
