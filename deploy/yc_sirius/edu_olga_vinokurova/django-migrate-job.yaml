@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrate
+  namespace: edu-olga-vinokurova
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrate
+          image: olgavino25/django-site:6e4ee00
+          command: ["python", "manage.py", "migrate"]
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: dsn
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-secrets
+                  key: SECRET_KEY
+          volumeMounts:
+            - name: ssl-certs
+              mountPath: /root/.postgresql
+              readOnly: true
+      volumes:
+        - name: ssl-certs
+          secret:
+            secretName: postgres
+            items:
+              - key: root.crt
+                path: root.crt
+                mode: 0600

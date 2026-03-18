@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+  namespace: edu-olga-vinokurova
+  labels:
+    app: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+      - name: django
+        image: olgavino25/django-site:6e4ee00
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        - name: DEBUG
+          value: "False"
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: django-secrets
+              key: SECRET_KEY
+        - name: ALLOWED_HOSTS
+          valueFrom:
+            secretKeyRef:
+              name: django-secrets
+              key: ALLOWED_HOSTS
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: postgres
+              key: dsn
+        volumeMounts:
+        - name: ssl-certs
+          mountPath: /root/.postgresql
+          readOnly: true
+      volumes:
+      - name: ssl-certs
+        secret:
+          secretName: postgres
+          items:
+          - key: root.crt
+            path: root.crt
+            mode: 0600

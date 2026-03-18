@@ -80,6 +80,7 @@ db.sqlite3
 
 # Kubernetes secrets (в любой папке)
 **/secrets.yaml
+django-secret.yaml
 
 # Тесты и отчёты
 htmlcov/
