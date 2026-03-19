@@ -537,7 +537,7 @@ kubectl create secret generic django-secrets -n <namespace> \
 
 ## Манифесты
 
-Все манифесты хранятся в `deploy/yc_sirius/<namespace>/`. Основные файлы:
+Все манифесты хранятся в `deploy/yc_sirius/edu_olga_vinokurova/`. Основные файлы:
 
 - `django-secret.yaml` — секреты.
 - `django-deployment.yaml` — Deployment приложения.
