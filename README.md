@@ -382,7 +382,7 @@ kubectl logs <pod-name>
 1. Применить манифест пода
 
 ```bash
-kubectl apply -f deploy/yc-sirius/<namespace>/test-nginx-pod.yaml
+kubectl apply -f deploy/yc_sirius/<namespace>/test-nginx-pod.yaml
 ```
 
 Проверьте, что под запустился:
@@ -394,7 +394,7 @@ kubectl get pods -n <namespace>
 2. Создать Service для доступа к поду
 
 ```bash
-kubectl apply -f deploy/yc-sirius/<namespace>/test-nginx-service.yaml
+kubectl apply -f deploy/yc_sirius/<namespace>/test-nginx-service.yaml
 ```
 
 Убедитесь, что сервис получил эндпоинт (IP пода):
@@ -456,7 +456,7 @@ kubectl rollout restart deployment main-nginx -n <namespace>
 - Смонтировать ключ `root.crt` в контейнер с правами 0600.
 - Указать переменные окружения, используя `valueFrom.secretKeyRef`.
 
-Пример пода с автоматическим монтированием сертификата см. в `deploy/yc-sirius/edu-olga-vinokurova/psql-client-automount.yaml`.
+Пример пода с автоматическим монтированием сертификата см. в `deploy/yc_sirius/edu_olga_vinokurova/psql-client-automount.yaml`.
 
 ## Сборка и публикация Docker-образа
 
@@ -537,7 +537,7 @@ kubectl create secret generic django-secrets -n <namespace> \
 
 ## Манифесты
 
-Все манифесты хранятся в `deploy/yc-sirius/<namespace>/`. Основные файлы:
+Все манифесты хранятся в `deploy/yc_sirius/<namespace>/`. Основные файлы:
 
 - `django-secret.yaml` — секреты.
 - `django-deployment.yaml` — Deployment приложения.
@@ -578,14 +578,14 @@ kubectl rollout restart deployment main-nginx -n <namespace>
 3. Примените изменения:
 
 ```bash
-kubectl apply -f deploy/yc-sirius/<namespace>/django-deployment.yaml
+kubectl apply -f deploy/yc_sirius/<namespace>/django-deployment.yaml
 ```
 
 4. Если есть новые миграции, запустите Job:
 
 ```bash
 kubectl delete job django-migrate -n <namespace>  # если старый ещё есть
-kubectl apply -f deploy/yc-sirius/<namespace>/django-migrate-job.yaml
+kubectl apply -f deploy/yc_sirius/<namespace>/django-migrate-job.yaml
 ```
 
 Создание суперпользователя:
