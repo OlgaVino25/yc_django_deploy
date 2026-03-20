@@ -156,7 +156,22 @@ ip route show default
 
 **Вариант 1 (через файл, не коммитить):**
 
-1. Скопируйте `secrets.yaml.example` и переименуйте в `secrets.yaml` и заполните своими значениями.
+1. Создайте файл `secrets.yaml` в backend_main_django/kubernetes/:
+
+```secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: django-secrets
+type: Opaque
+stringData:
+  SECRET_KEY: "your-secret-key"
+  DATABASE_URL: "postgres://test_k8s:OwOtBep9Frut@my-postgres-postgresql.default.svc.cluster.local:5432/test_k8s"
+  ALLOWED_HOSTS: "localhost,127.0.0.1,<minikube-ip>"
+```
+
+*Замените на свои значения*
+
 2. Примените: `kubectl apply -f secrets.yaml`
 3. `secrets.yaml` добавлен в `.gitignore`.
 
@@ -517,7 +532,21 @@ image: your-dockerhub-username/django-site:<хэш-коммита>
 
 **Вариант 1 (через файл, не коммитить):**
 
-1. Скопируйте `django-secret.yaml.example` и переименуйте в `django-secret.yaml` и заполните своими значениями.
+1. Создайте файл `django-secret.yaml` в deploy/yc_sirius/edu_olga_vinokurova/:
+
+```django-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: django-secrets
+  namespace: your_namespace
+type: Opaque
+stringData:
+  SECRET_KEY: "your_secret_key"
+  ALLOWED_HOSTS: "<full_domain>,localhost,127.0.0.1"
+```
+*Замените на свои значения*
+
 2. Примените:
 
 ```bash
